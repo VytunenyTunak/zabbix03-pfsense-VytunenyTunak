@@ -1,0 +1,27 @@
+Protokol o konfiguraci a monitorování pfSense
+
+1. Konfigurace služeb a Web Serveru:
+
+V Zabbix appliance nebyla nalezena služba httpd (Apache), příkazy vracely chybu "unit not found".
+
+Průzkumem systému bylo zjištěno, že webové rozhraní běží na serveru nginx na portu 80.
+
+Služba firewalld není v této verzi appliance zavedena, přístup k webu nebyl blokován lokálním firewallem.
+
+Přístup do Zabbixu byl zprovozněn pomocí Port Forwardingu ve VirtualBoxu přes IP 127.0.0.1 a port 8080.
+
+2. Monitorování přes SNMP:
+
+Na firewallu pfSense (IP 192.168.1.1) byl aktivován SNMP agent s community stringem public.
+
+Pokus o instalaci net-snmp-utils na appliance selhal kvůli nedostupnosti repozitářů AlmaLinuxu.
+
+Funkčnost SNMP byla ověřena přímo v Zabbixu po importu oficiální šablony a sledováním příchozích dat.
+
+3. Práce se šablonami a tagování:
+
+Byla využita šablona PFSense by SNMP.
+
+U vybraných 11 položek (Items) byl proveden Mass update (hromadná úprava) a přidán tag target: pf pro budoucí filtrování dat.
+
+Výsledná upravená konfigurace byla vyexportována do přiloženého YAML souboru.
